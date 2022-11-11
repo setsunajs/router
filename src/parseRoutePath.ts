@@ -1,17 +1,11 @@
-export function normalizeSlash(path) {
-  if (path.endsWith("/")) {
-    path = path.slice(0, -1)
-  }
-
-  if (!path.startsWith("/")) {
-    path = "/" + path
-  }
-
+export function normalizeSlash(path: string) {
+  if (path.endsWith("/")) path = path.slice(0, -1)
+  if (!path.startsWith("/")) path = "/" + path
   return path
 }
 
-export function parseRoutePath(path) {
-  const paramKeys = []
+export function parseRoutePath(path: string) {
+  const paramKeys: string[] = []
   path = String(path)
   path = normalizeSlash(path)
 
@@ -31,5 +25,5 @@ export function parseRoutePath(path) {
     path = str
   }
 
-  return [path, paramKeys]
+  return [path, paramKeys] as const
 }

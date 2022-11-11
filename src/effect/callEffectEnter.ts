@@ -1,12 +1,13 @@
-import { createRouteRecord } from "../createRouteRecord"
-import { isString } from "@setsunajs/share"
-import { parseLocation } from "../parseLocation"
+import { createRouteRecord, RouteRecord } from "../createRouteRecord"
+import { isString } from "@setsunajs/shared"
+import { parseLocation, PathTemp } from "../parseLocation"
 import { normalizeNavState } from "../history/web"
 import { callEffectNavigate } from "./callEffectNavigate"
+import { RouterContext } from "../router"
 
-export function callEffectEnter(pathTmpl, router) {
+export function callEffectEnter(pathTemp: PathTemp, router: RouterContext): RouteRecord {
   const { beforeEnter, his } = router
-  const record = createRouteRecord(pathTmpl, router)
+  const record = createRouteRecord(pathTemp)
   if (!record.matchState) {
     throw null
   }
@@ -21,10 +22,9 @@ export function callEffectEnter(pathTmpl, router) {
     throw null
   }
 
-  const fromRecord = his.state.location
-  const res = beforeEnter(record.state, fromRecord.state)
+  const res = beforeEnter(record.state, his.location.state)
   if (isString(res)) {
-    return callEffectEnter(parseLocation(normalizeNavState(res)), router)
+    return callEffectEnter(parseLocation(normalizeNavState(res), router), router)
   }
 
   if (res) {
