@@ -115,4 +115,3 @@ export function useRouter() {
 export function useNavigate() {
   return global_router!.his.navigator
 }
-

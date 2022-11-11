@@ -1,10 +1,12 @@
 {
   "name": "@setsunajs/router",
-  "scripts": {
-    "format": "prettier -w .",
-    "build": "node ./scripts/build.js"
-  },
+  "version": "0.0.2",
   "type": "module",
+  "scripts": {
+    "build": "node ./scripts/build.js",
+    "release": "node ./scripts/release.js",
+    "format": "prettier -w ."
+  },
   "dependencies": {
     "@setsunajs/observable": "^0.1.5",
     "@setsunajs/shared": "^0.1.2",

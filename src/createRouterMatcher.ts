@@ -51,8 +51,8 @@ export function createRouterMatcher(routes: RouterRouteRaw[]) {
   }
 }
 export type Matcher = {
-  resolve: (key: string) => MatcherRoute | undefined;
-  resolveRecordMatcher: (record: any) => MatcherRoute[];
+  resolve: (key: string) => MatcherRoute | undefined
+  resolveRecordMatcher: (record: any) => MatcherRoute[]
 }
 
 type MatcherOptions = {
