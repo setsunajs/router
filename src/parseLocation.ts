@@ -1,6 +1,6 @@
-import { MatcherRoute } from './createRouterMatcher'
-import { parseRoutePath } from './parseRoutePath'
-import { RouterContext } from './router'
+import { MatcherRoute } from "./createRouterMatcher"
+import { parseRoutePath } from "./parseRoutePath"
+import { RouterContext } from "./router"
 
 export type PathTemp = {
   base: string
@@ -20,20 +20,20 @@ export function parseLocation(pathExp: Options, router: RouterContext) {
   const base = his.base
   const loc: PathTemp = {
     base: base.value,
-    path: '',
-    pathname: '',
-    search: '',
-    hash: '',
+    path: "",
+    pathname: "",
+    search: "",
+    hash: "",
     query: {},
     params: {},
-    matchPath: '',
+    matchPath: "",
     matchState: null
   }
   const { pathname, search, hash } = location
-  let _path = ''
+  let _path = ""
 
   if (!pathExp) {
-    if (type === 'hash') {
+    if (type === "hash") {
       loc.pathname = pathname
       loc.search = search
       loc.hash = normalizeHashPath(excludeQuery(hash))
@@ -41,23 +41,23 @@ export function parseLocation(pathExp: Options, router: RouterContext) {
       _path = loc.hash
     } else {
       loc.pathname = pathname
-      loc.search = ''
+      loc.search = ""
       loc.hash = hash
       loc.query = parseQuery(search)
       _path = pathname
     }
   } else {
     const { path, query } = pathExp
-    if (type === 'hash') {
+    if (type === "hash") {
       loc.pathname = pathname
       loc.search = search
       loc.hash = normalizeHashPath(excludeQuery(path))
       loc.query = { ...parseQuery(path), ...query }
       _path = loc.hash
     } else {
-      loc.pathname = ''
-      loc.search = ''
-      loc.hash = ''
+      loc.pathname = ""
+      loc.search = ""
+      loc.hash = ""
       loc.query = { ...parseQuery(path), ...query }
       _path = excludeQuery(path)
     }
@@ -89,23 +89,23 @@ export function parseLocation(pathExp: Options, router: RouterContext) {
 }
 
 export function excludeQuery(path: string) {
-  return path.includes('?') ? path.slice(0, path.indexOf('?')) : path
+  return path.includes("?") ? path.slice(0, path.indexOf("?")) : path
 }
 
 export function normalizeHashPath(hash: string) {
   hash = hash.slice(1)
-  return hash.startsWith('/') ? hash : `/${hash}`
+  return hash.startsWith("/") ? hash : `/${hash}`
 }
 
 export function parseQuery(path: string) {
-  const anchor = path.indexOf('?')
+  const anchor = path.indexOf("?")
   if (anchor === -1) return {}
 
   path = path.slice(anchor + 1)
-  return path.split('&').reduce<Record<string, string>>((query, str) => {
-    const [key, value] = str.split('=')
+  return path.split("&").reduce<Record<string, string>>((query, str) => {
+    const [key, value] = str.split("=")
     if (key) {
-      query[decodeURIComponent(key)] = value ? decodeURIComponent(value) : ''
+      query[decodeURIComponent(key)] = value ? decodeURIComponent(value) : ""
     }
 
     return query

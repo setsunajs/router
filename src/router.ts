@@ -1,35 +1,40 @@
-import { isArray } from '@setsunajs/shared'
-import { isFunction, BROWSER } from '@setsunajs/shared'
-import { createRouterMatcher } from './createRouterMatcher'
-import { callEffectNavigate } from './effect/callEffectNavigate'
-import { createWebHistory, NavigateInfo } from './history/web'
-import { createMemoryHistory } from './history/memory'
-import { RouteRecord } from './createRouteRecord'
+import { isArray } from "@setsunajs/shared"
+import { isFunction, BROWSER } from "@setsunajs/shared"
+import { createRouterMatcher } from "./createRouterMatcher"
+import { callEffectNavigate } from "./effect/callEffectNavigate"
+import { createWebHistory, NavigateInfo } from "./history/web"
+import { createMemoryHistory } from "./history/memory"
+import { RouteRecord } from "./createRouteRecord"
 
 export function createBrowserRouter(options: RouterOptions) {
-  return createRouter('history', options, createWebHistory)
+  return createRouter("history", options, createWebHistory)
 }
 
 export function createHashRouter(options: RouterOptions) {
-  return createRouter('hash', options, createWebHistory)
+  return createRouter("hash", options, createWebHistory)
 }
 
 export function createMemoryRouter(options: RouterOptions) {
-  return createRouter('memory', options, createMemoryHistory)
+  return createRouter("memory", options, createMemoryHistory)
 }
 
-export type RouterType = 'history' | 'hash' | 'memory'
+export type RouterType = "history" | "hash" | "memory"
 export type RouterBeforeEnter = (
-  to: RouteRecord['state'],
-  from: RouteRecord['state']
-) => NavigateInfo | Promise<NavigateInfo> | Promise<boolean> | boolean | undefined
+  to: RouteRecord["state"],
+  from: RouteRecord["state"]
+) =>
+  | NavigateInfo
+  | Promise<NavigateInfo>
+  | Promise<boolean>
+  | boolean
+  | undefined
 export type RouterAfterEnter = (
-  to: RouteRecord['state'],
-  from: RouteRecord['state']
+  to: RouteRecord["state"],
+  from: RouteRecord["state"]
 ) => unknown
 export type RouterScrollBehavior = (
-  to: RouteRecord['state'],
-  from: RouteRecord['state'],
+  to: RouteRecord["state"],
+  from: RouteRecord["state"],
   pos: ScrollToOptions
 ) => ScrollToOptions | null
 export type RouterRouteRaw = {
@@ -71,11 +76,11 @@ export function createRouter(
 
   const { beforeEnter, afterEnter, routes, scrollBehavior } = options
   if (!isArray(routes)) {
-    throw 'router-routes must be a array'
+    throw "router-routes must be a array"
   }
 
   if (BROWSER && scrollBehavior) {
-    history.scrollRestoration = 'manual'
+    history.scrollRestoration = "manual"
   }
 
   const router: RouterContext = {

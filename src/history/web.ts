@@ -1,18 +1,18 @@
-import { RouterContext } from '../router'
-import { isPlainObject, isString } from '@setsunajs/shared'
-import { normalizeSlash } from '../parseRoutePath'
-import { excludeQuery, parseLocation } from '../parseLocation'
+import { RouterContext } from "../router"
+import { isPlainObject, isString } from "@setsunajs/shared"
+import { normalizeSlash } from "../parseRoutePath"
+import { excludeQuery, parseLocation } from "../parseLocation"
 import {
   createRouteRecord,
   EMPTY_RECORD,
   RouteRecord
-} from '../createRouteRecord'
-import { callEffectNavigate } from '../effect/callEffectNavigate'
-import { error } from '../handler'
+} from "../createRouteRecord"
+import { callEffectNavigate } from "../effect/callEffectNavigate"
+import { error } from "../handler"
 
 export function createWebHistory(router: RouterContext) {
   const state = {
-    base: normalizeBase(router.options.base ?? ''),
+    base: normalizeBase(router.options.base ?? ""),
     location: EMPTY_RECORD
   }
 
@@ -31,7 +31,7 @@ export function createWebHistory(router: RouterContext) {
   function navigate(to: NavigateInfo, replace: boolean) {
     const options = normalizeNavState(to)
     if (!isString(options.path)) {
-      return error('path is not a string', options.path)
+      return error("path is not a string", options.path)
     }
 
     if (!options.force && state.location.loc.path === options.path) {
@@ -50,8 +50,8 @@ export function createWebHistory(router: RouterContext) {
   function setLocation(record: RouteRecord, replace: boolean) {
     const { base, path, pathname, search, hash, query } = record.loc
     let href, fullPath
-    if (router.type === 'hash') {
-      href = base + pathname + search + '/#' + hash + queryString(query)
+    if (router.type === "hash") {
+      href = base + pathname + search + "/#" + hash + queryString(query)
       fullPath = base + pathname + search + hash
     } else {
       href = base + path + queryString(query) + hash
@@ -59,9 +59,9 @@ export function createWebHistory(router: RouterContext) {
     }
 
     record.state.fullPath = fullPath
-    history[replace ? 'replaceState' : 'pushState'](
+    history[replace ? "replaceState" : "pushState"](
       { setsuna_router: record.state },
-      '',
+      "",
       href
     )
     state.location = record
@@ -74,10 +74,10 @@ export function createWebHistory(router: RouterContext) {
   }
 
   function destroy() {
-    window.removeEventListener('popstate', onPopstateEvent)
+    window.removeEventListener("popstate", onPopstateEvent)
   }
 
-  window.addEventListener('popstate', onPopstateEvent)
+  window.addEventListener("popstate", onPopstateEvent)
 
   return {
     get base() {
@@ -121,13 +121,13 @@ export function normalizeNavState(info: NavigateInfo): NavigateState {
 }
 
 function normalizeBase(basePath: string) {
-  let base = basePath ? String(basePath) : ''
-  base = base.replace(/^\w+:\/+/, '').replace(/\/?#/, '')
+  let base = basePath ? String(basePath) : ""
+  base = base.replace(/^\w+:\/+/, "").replace(/\/?#/, "")
   base = excludeQuery(base)
   base = normalizeSlash(base)
 
-  if (base === '/') {
-    base = ''
+  if (base === "/") {
+    base = ""
   }
 
   return {
@@ -139,16 +139,16 @@ function normalizeBase(basePath: string) {
 function queryString(query: Record<string, string>) {
   let tokens: string[] = []
   Object.entries(query).forEach(([key, value]) => {
-    let exp = ''
+    let exp = ""
     if (key) {
       exp = key
     }
     if (value) {
-      exp += '=' + value
+      exp += "=" + value
     }
     if (exp.length > 0) {
       tokens.push(exp)
     }
   })
-  return (tokens.length > 0 ? '?' : '') + tokens.join('&')
+  return (tokens.length > 0 ? "?" : "") + tokens.join("&")
 }

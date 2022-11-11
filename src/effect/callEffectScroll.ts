@@ -1,8 +1,8 @@
-import { isPlainObject } from '@setsunajs/shared'
-import { nextTick } from 'setsuna'
-import { error } from '../handler'
-import { RouteRecord } from '../createRouteRecord'
-import { RouterContext } from '../router'
+import { isPlainObject } from "@setsunajs/shared"
+import { nextTick } from "setsuna"
+import { error } from "../handler"
+import { RouteRecord } from "../createRouteRecord"
+import { RouterContext } from "../router"
 
 export function callEffectScroll(
   to: RouteRecord,
@@ -18,14 +18,14 @@ export function callEffectScroll(
     const res = scrollBehavior(to.state, from.state, savedPosition)
     if (!isPlainObject(res)) {
       return error(
-        'The return value of `scrollBehavior()` is not a legal return value',
+        "The return value of `scrollBehavior()` is not a legal return value",
         res
       )
     }
 
     to.state.position = res
   } catch (err) {
-    error('afterEnter has a error', err)
+    error("afterEnter has a error", err)
   } finally {
     nextTick(() => {
       try {

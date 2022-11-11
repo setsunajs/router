@@ -5,7 +5,10 @@ import { normalizeNavState } from "../history/web"
 import { callEffectNavigate } from "./callEffectNavigate"
 import { RouterContext } from "../router"
 
-export function callEffectEnter(pathTemp: PathTemp, router: RouterContext): RouteRecord {
+export function callEffectEnter(
+  pathTemp: PathTemp,
+  router: RouterContext
+): RouteRecord {
   const { beforeEnter, his } = router
   const record = createRouteRecord(pathTemp)
   if (!record.matchState) {
@@ -24,7 +27,10 @@ export function callEffectEnter(pathTemp: PathTemp, router: RouterContext): Rout
 
   const res = beforeEnter(record.state, his.location.state)
   if (isString(res)) {
-    return callEffectEnter(parseLocation(normalizeNavState(res), router), router)
+    return callEffectEnter(
+      parseLocation(normalizeNavState(res), router),
+      router
+    )
   }
 
   if (res) {

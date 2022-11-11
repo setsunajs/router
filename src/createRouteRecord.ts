@@ -1,5 +1,5 @@
-import { PathTemp } from './parseLocation';
-import { MatcherRoute } from './createRouterMatcher';
+import { PathTemp } from "./parseLocation"
+import { MatcherRoute } from "./createRouterMatcher"
 
 export type RouteRecord = {
   loc: any

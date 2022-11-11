@@ -1,7 +1,7 @@
-import { RouterRouteRaw } from './router'
-import { parseRoutePath } from './parseRoutePath'
-import { isFunction, isPlainObject, isString } from '@setsunajs/shared'
-import { error } from './handler'
+import { RouterRouteRaw } from "./router"
+import { parseRoutePath } from "./parseRoutePath"
+import { isFunction, isPlainObject, isString } from "@setsunajs/shared"
+import { error } from "./handler"
 
 export type Matcher = Map<string, MatcherRoute>
 export type MatcherRoute = {
@@ -64,10 +64,10 @@ export function createRouteMatcher({
   parent
 }: MatcherOptions) {
   if (!isPlainObject(route))
-    return error('current RouterRoute is invalid', route)
+    return error("current RouterRoute is invalid", route)
 
   const { path, redirect, loader, children } = route
-  if (!isString(path)) return error('RouterRoute path must be string')
+  if (!isString(path)) return error("RouterRoute path must be string")
 
   const [_path, paramKeys] = parseRoutePath(path)
   const _regPath = deep === 0 ? _path : `${parent!.matchPath}${_path}`
@@ -86,7 +86,7 @@ export function createRouteMatcher({
 
   if (loader && !isFunction(loader)) {
     _route.loader = null
-    error('route loader is not a function', loader)
+    error("route loader is not a function", loader)
   }
 
   if (Array.isArray(children)) {

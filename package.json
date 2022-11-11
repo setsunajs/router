@@ -1,22 +1,28 @@
 {
-	"name": "@setsunajs/router",
-	"devDependencies": {
-		"@microsoft/api-extractor": "^7.33.6",
-		"@types/inquirer": "^9.0.3",
-		"@types/minimist": "^1.2.2",
-		"@types/node": "^18.11.9",
-		"chalk": "^5.1.2",
-		"esbuild": "^0.15.13",
-		"execa": "^6.1.0",
-		"inquirer": "^9.1.4",
-		"minimist": "^1.2.7",
-		"semver": "^7.3.8",
-		"terser": "^5.15.1",
-		"typescript": "^4.8.4"
-	},
-	"dependencies": {
-		"@setsunajs/observable": "^0.1.5",
-		"@setsunajs/shared": "^0.1.2",
-		"setsuna": "^0.1.4"
-	}
+  "name": "@setsunajs/router",
+  "scripts": {
+    "format": "prettier -w ."
+  },
+  "type": "module",
+  "dependencies": {
+    "@setsunajs/observable": "^0.1.5",
+    "@setsunajs/shared": "^0.1.2",
+    "setsuna": "^0.1.4"
+  },
+  "devDependencies": {
+    "@microsoft/api-extractor": "^7.33.6",
+    "@types/inquirer": "^9.0.3",
+    "@types/minimist": "^1.2.2",
+    "@types/node": "^18.11.9",
+    "chalk": "^5.1.2",
+    "esbuild": "^0.15.13",
+    "execa": "^6.1.0",
+    "inquirer": "^9.1.4",
+    "minimist": "^1.2.7",
+    "prettier": "^2.7.1",
+    "prettier-config-usagisah": "^1.0.1",
+    "semver": "^7.3.8",
+    "terser": "^5.15.1",
+    "typescript": "^4.8.4"
+  }
 }

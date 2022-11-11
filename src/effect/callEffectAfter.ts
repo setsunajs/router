@@ -1,6 +1,6 @@
-import { RouteRecord } from '../createRouteRecord'
-import { error } from '../handler'
-import { RouterContext } from '../router'
+import { RouteRecord } from "../createRouteRecord"
+import { error } from "../handler"
+import { RouterContext } from "../router"
 
 export function callEffectAfter(
   fromRecord: RouteRecord,
@@ -13,6 +13,6 @@ export function callEffectAfter(
   try {
     afterEnter(location.state, fromRecord.state)
   } catch (err) {
-    error('afterEnter has a error', err)
+    error("afterEnter has a error", err)
   }
 }

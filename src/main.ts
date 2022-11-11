@@ -2,8 +2,8 @@ import {
   createBrowserRouter as _createBrowserRouter,
   RouterOptions,
   useRouter
-} from './router'
-import { createObservable } from '@setsunajs/observable'
+} from "./router"
+import { createObservable } from "@setsunajs/observable"
 import {
   nextTick,
   useComputed,
@@ -14,14 +14,14 @@ import {
   useState,
   jsx,
   VNode
-} from 'setsuna'
-import { isFunction } from '@setsunajs/shared'
-import { error } from './handler'
+} from "setsuna"
+import { isFunction } from "@setsunajs/shared"
+import { error } from "./handler"
 
-const INJECT_ROUTE_VIEW = 'setsuna route view'
-const INJECT_ROUTE_ORDER = 'setsuna route order'
+const INJECT_ROUTE_VIEW = "setsuna route view"
+const INJECT_ROUTE_ORDER = "setsuna route order"
 
-export * from './router'
+export * from "./router"
 
 export function useRoute() {
   const order = useContext(INJECT_ROUTE_ORDER)
@@ -38,11 +38,12 @@ export function useLoaderData() {
     return () => (unmounted = true)
   })
 
-  views()[order() - 1].loaderData.then((data: any) => {
-    if (!unmounted) {
-      setData(isFunction(data) ? () => data : data)
-    }
-  })
+  const route = views()[order() - 1]
+  if (route) {
+    route.loaderData.then((data: any) => {
+      if (!unmounted) setData(data)
+    })
+  }
 
   return data
 }
@@ -51,12 +52,14 @@ export function useRouterView() {
   const views = useContext(INJECT_ROUTE_VIEW)
   const order = useContext(INJECT_ROUTE_ORDER)
   const [_, setOrder] = useProvide(INJECT_ROUTE_ORDER, order() + 1)
-  const [component, setComponent] = useState(() => {
-    const route = views()[order()]
-    return route ? route.options.component : null
-  })
+  const [component, setComponent] = useState(
+    (() => {
+      const route = views()[order()]
+      return route ? route.options.component : null
+    })()
+  )
 
-  useEffect([views], () => {
+  useEffect([views, order], () => {
     const route = views()[order()]
     setComponent(route ? route.options.component : null)
     setOrder(order() + 1)
@@ -90,7 +93,7 @@ export function Lazy({ load }: { load: () => Promise<any> }) {
         }
       }
     },
-    err => error('component lazy, loading has a error', err)
+    err => error("component lazy, loading has a error", err)
   )
 
   return () => component()
@@ -104,7 +107,7 @@ export type SeRouterOptions = {
   beforeResolve?: any
   afterResolve?: any
   routes: RouterRaw[]
-} & Omit<RouterOptions, 'beforeEnter' | 'afterEnter'>
+} & Omit<RouterOptions, "beforeEnter" | "afterEnter">
 
 export function createBrowserRouter(options: SeRouterOptions) {
   const router$ = createObservable()
@@ -125,7 +128,7 @@ export function createBrowserRouter(options: SeRouterOptions) {
           nextTick(() => afterResolve(to, from))
         }
       } catch (err) {
-        error('afterEnter', 'call afterEnter has a error', err)
+        error("afterEnter", "call afterEnter has a error", err)
       }
     }
   })
@@ -143,6 +146,6 @@ export function createBrowserRouter(options: SeRouterOptions) {
       }
     })
 
-    return () => jsx('children', null)
+    return () => jsx("children", null)
   }
 }

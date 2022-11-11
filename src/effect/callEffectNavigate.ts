@@ -1,11 +1,11 @@
-import { callEffectEnter } from './callEffectEnter'
-import { callEffectLoader } from './callEffectLoader'
-import { callEffectScroll } from './callEffectScroll'
-import { callEffectAfter } from './callEffectAfter'
-import { error } from '../handler'
-import { RouterContext } from '../router'
-import { PathTemp } from '../parseLocation'
-import { RouteRecord } from '../createRouteRecord'
+import { callEffectEnter } from "./callEffectEnter"
+import { callEffectLoader } from "./callEffectLoader"
+import { callEffectScroll } from "./callEffectScroll"
+import { callEffectAfter } from "./callEffectAfter"
+import { error } from "../handler"
+import { RouterContext } from "../router"
+import { PathTemp } from "../parseLocation"
+import { RouteRecord } from "../createRouteRecord"
 
 export function callEffectNavigate(
   pathTemp: PathTemp,
@@ -27,6 +27,6 @@ export function callEffectNavigate(
     callEffectScroll(record, fromRecord, router)
   } catch (err) {
     if (err === null) return
-    error('router has a uncaught exceptions', err)
+    error("router has a uncaught exceptions", err)
   }
 }

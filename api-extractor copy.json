@@ -1,6 +1,6 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
-  "mainEntryPointFilePath": "./dist/temp/observable/index.d.ts",
+  "mainEntryPointFilePath": "./dist/temp/main.d.ts",
   "testMode": true,
   "apiReport": {
     "enabled": false
@@ -10,7 +10,7 @@
   },
   "dtsRollup": {
     "enabled": true,
-    "untrimmedFilePath": "./dist/dts/observable.d.ts"
+    "untrimmedFilePath": "./dist/shared.d.ts"
   },
   "tsdocMetadata": {
     "enabled": false
