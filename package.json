@@ -1,15 +1,47 @@
 {
   "name": "@setsunajs/router",
   "version": "0.0.2",
+  "description": "Router serving 'setsuna'",
+  "keywords": [
+    "setsuna",
+    "@setsunajs/router"
+  ],
+  "homepage": "https://github.com/setsunajs/router#readme",
+  "bugs": {
+    "url": "https://github.com/setsunajs/router/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/setsunajs/router.git"
+  },
+  "license": "MIT",
+  "author": "@顾弦笙/usagisah <1286791152@qq.com>",
   "type": "module",
+  "exports": {
+    ".": {
+      "require": "./index.js",
+      "import": "./dist/router.js",
+      "types": "./dist/router.d.ts"
+    },
+    "./dist/*": "./dist/*"
+  },
+  "main": "index.js",
+  "jsdelivr": "dist/router.global.js",
+  "unpkg": "dist/router.global.js",
+  "module": "dist/router.js",
+  "types": "dist/router.d.ts",
+  "files": [
+    "index.js",
+    "dist"
+  ],
   "scripts": {
     "build": "node ./scripts/build.js",
-    "release": "node ./scripts/release.js",
-    "format": "prettier -w ."
+    "format": "prettier -w .",
+    "release": "node ./scripts/release.js"
   },
   "dependencies": {
     "@setsunajs/observable": "^0.1.5",
-    "@setsunajs/shared": "^0.1.2",
+    "@setsunajs/router": "^0.1.2",
     "setsuna": "^0.1.4"
   },
   "devDependencies": {
