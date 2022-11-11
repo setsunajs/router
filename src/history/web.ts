@@ -97,6 +97,7 @@ export function createWebHistory(router: RouterContext) {
     destroy
   }
 }
+export type WebHistory = typeof createWebHistory
 
 export type NavigateInfo = string | NavigateState
 export type NavigateState = {

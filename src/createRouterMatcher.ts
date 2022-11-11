@@ -3,7 +3,7 @@ import { parseRoutePath } from "./parseRoutePath"
 import { isFunction, isPlainObject, isString } from "@setsunajs/shared"
 import { error } from "./handler"
 
-export type Matcher = Map<string, MatcherRoute>
+export type MatcherMap = Map<string, MatcherRoute>
 export type MatcherRoute = {
   path: string
   matchPath: string
@@ -17,7 +17,7 @@ export type MatcherRoute = {
   options: any
 }
 export function createRouterMatcher(routes: RouterRouteRaw[]) {
-  const matcher: Matcher = new Map()
+  const matcher: MatcherMap = new Map()
   routes.forEach(route => createRouteMatcher({ route, deep: 0, matcher }))
   return {
     resolve: (key: string) => {
@@ -49,6 +49,10 @@ export function createRouterMatcher(routes: RouterRouteRaw[]) {
       return matchs.reverse()
     }
   }
+}
+export type Matcher = {
+  resolve: (key: string) => MatcherRoute | undefined;
+  resolveRecordMatcher: (record: any) => MatcherRoute[];
 }
 
 type MatcherOptions = {

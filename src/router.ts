@@ -1,10 +1,16 @@
 import { isArray } from "@setsunajs/shared"
 import { isFunction, BROWSER } from "@setsunajs/shared"
-import { createRouterMatcher } from "./createRouterMatcher"
+import { createRouterMatcher, Matcher } from "./createRouterMatcher"
 import { callEffectNavigate } from "./effect/callEffectNavigate"
-import { createWebHistory, NavigateInfo } from "./history/web"
-import { createMemoryHistory } from "./history/memory"
+import { createWebHistory, NavigateInfo, WebHistory } from "./history/web"
+import { createMemoryHistory, MemoryHistory } from "./history/memory"
 import { RouteRecord } from "./createRouteRecord"
+
+export { NavigateInfo, NavigateState } from "./history/web"
+export { RouteRecord } from "./createRouteRecord"
+export { Matcher, MatcherRoute } from "./createRouterMatcher"
+export * from "./history/web"
+export * from "./history/memory"
 
 export function createBrowserRouter(options: RouterOptions) {
   return createRouter("history", options, createWebHistory)
@@ -57,8 +63,8 @@ export type RouterContext = {
   afterEnter: RouterAfterEnter
   scrollBehavior: RouterScrollBehavior
   routes: RouterRouteRaw[]
-  his: ReturnType<typeof createWebHistory>
-  matcher: ReturnType<typeof createRouterMatcher>
+  his: ReturnType<WebHistory>
+  matcher: Matcher
   options: RouterOptions
 }
 
@@ -68,7 +74,7 @@ let global_router: RouterContext | null = null
 export function createRouter(
   type: RouterType,
   options: RouterOptions,
-  createHistory: typeof createWebHistory | typeof createMemoryHistory
+  createHistory: WebHistory | MemoryHistory
 ) {
   if (global_router) {
     return global_router
@@ -109,3 +115,4 @@ export function useRouter() {
 export function useNavigate() {
   return global_router!.his.navigator
 }
+

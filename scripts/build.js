@@ -11,7 +11,10 @@ const PROD = mod === "prod"
 
 async function build() {
   print("pre build...")
-  await clean()
+  await rm(resolve("./dist"), {
+    recursive: true,
+    force: true
+  })
   success("pre build success")
 
   print("start code build...")
@@ -36,16 +39,9 @@ async function build() {
   success("type build success")
 }
 
-function clean() {
-  return rm(resolve("./dist"), {
-    recursive: true,
-    force: true
-  })
-}
-
 function createConfig({ format, prod }) {
   return {
-    outfile: `./dist/shared${resolveFormatExt({ format, prod })}`,
+    outfile: `./dist/router${resolveFormatExt({ format, prod })}`,
     entryPoints: [resolve("./src/main.ts")],
     bundle: true,
     platform: "browser",
@@ -88,7 +84,7 @@ async function buildType() {
     showVerboseMessages: true
   })
   if (!extractorResult.succeeded) {
-    throw "merge .d.ts failed"
+    throw "merge router.d.ts failed"
   }
 
   await rm(temp, { force: true, recursive: true })

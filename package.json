@@ -1,7 +1,8 @@
 {
   "name": "@setsunajs/router",
   "scripts": {
-    "format": "prettier -w ."
+    "format": "prettier -w .",
+    "build": "node ./scripts/build.js"
   },
   "type": "module",
   "dependencies": {
