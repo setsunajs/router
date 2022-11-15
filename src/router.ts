@@ -100,7 +100,7 @@ export function createRouter(
     options
   }
 
-  createHistory(router)
+  ;(router as any).his = createHistory(router)
   callEffectNavigate(router.his.location.loc, router, (record: RouteRecord) => {
     router.his.setLocation(record, true)
   })

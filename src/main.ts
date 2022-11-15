@@ -13,7 +13,8 @@ import {
   useProvide,
   useState,
   jsx,
-  VNode
+  VNode,
+  FC
 } from "setsuna"
 import { isFunction } from "@setsunajs/shared"
 import { error } from "./handler"
@@ -55,25 +56,25 @@ export function useRouterView() {
   const [component, setComponent] = useState(
     (() => {
       const route = views()[order()]
-      return route ? route.options.component : null
+      return route ? route.options.element : null
     })()
   )
 
   useEffect([views, order], () => {
     const route = views()[order()]
-    setComponent(route ? route.options.component : null)
+    setComponent(route ? route.options.element : null)
     setOrder(order() + 1)
   })
 
   return component
 }
 
-export function RouterView() {
+export const RouterView: FC<{}> = () => {
   const component = useRouterView()
   return () => component()
 }
 
-export function Lazy({ load }: { load: () => Promise<any> }) {
+export const Lazy: FC<{ load: () => Promise<any> }> = ({ load }) => {
   if (!isFunction(load)) {
     throw "Lazy component: parameter 'load' is not a legal function "
   }
@@ -99,14 +100,16 @@ export function Lazy({ load }: { load: () => Promise<any> }) {
   return () => component()
 }
 
-export type RouterRaw = {
+export type SeRouterRaw = {
   path: string
+  element: JSX.Element
   loader?: any
 }
 export type SeRouterOptions = {
+  base?: string
   beforeResolve?: any
   afterResolve?: any
-  routes: RouterRaw[]
+  routes: SeRouterRaw[]
 } & Omit<RouterOptions, "beforeEnter" | "afterEnter">
 
 export function createBrowserRouter(options: SeRouterOptions) {
@@ -147,5 +150,5 @@ export function createBrowserRouter(options: SeRouterOptions) {
     })
 
     return () => jsx("children", null)
-  }
+  } as FC<{}>
 }

@@ -16,10 +16,13 @@ export function createWebHistory(router: RouterContext) {
     location: EMPTY_RECORD
   }
 
-  if (history.state.setsuna_router) {
-    const preLocation = history.state.setsuna_router
+  router.his = { base: state.base, location: state.location } as any
+  if (history.state?.setsuna_router) {
+    const preLocation = history.state?.setsuna_router
     state.location = createRouteRecord(parseLocation(preLocation, router))
     state.location.state.position = preLocation.position
+  } else {
+    state.location.loc = parseLocation(null, router)
   }
 
   const push = (to: NavigateInfo) => navigate(to, false)
