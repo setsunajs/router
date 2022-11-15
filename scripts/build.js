@@ -50,7 +50,7 @@ function createConfig({ format, prod }) {
     incremental: false,
     format,
     minify: prod,
-    target: "es2017",
+    target: "es2018",
     treeShaking: true,
     external: ["setsuna", "@setsunajs/observable"]
   }

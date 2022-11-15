@@ -1,6 +1,9 @@
 import {
   createBrowserRouter as _createBrowserRouter,
-  RouterOptions,
+  RouterAfterEnter,
+  RouterBeforeEnter,
+  RouteRecord,
+  RouterScrollBehavior,
   useRouter
 } from "./router"
 import { createObservable } from "@setsunajs/observable"
@@ -26,13 +29,15 @@ export * from "./router"
 
 export function useRoute() {
   const order = useContext(INJECT_ROUTE_ORDER)
-  return useComputed([order], () => useRouter().his.location.state)
+  return useComputed<RouteRecord["state"]>([order], () => useRouter().his.location.state)[0]
 }
 
-export function useLoaderData() {
+export function useLoaderData<T>() {
   const views = useContext(INJECT_ROUTE_VIEW)
   const order = useContext(INJECT_ROUTE_ORDER)
-  const [data, setData] = useState(undefined)
+  const [data, setData] = useState<
+    undefined | (T extends Promise<any> ? Awaited<T> : T)
+  >(undefined)
   let unmounted = false
 
   useMount(() => {
@@ -103,14 +108,19 @@ export const Lazy: FC<{ load: () => Promise<any> }> = ({ load }) => {
 export type SeRouterRaw = {
   path: string
   element: JSX.Element
-  loader?: any
+  loader?: () => unknown
+  children?: SeRouterRaw[]
 }
+
+export type BeforeResolve = RouterBeforeEnter
+export type AfterResolve = RouterAfterEnter
 export type SeRouterOptions = {
   base?: string
-  beforeResolve?: any
-  afterResolve?: any
+  beforeResolve?: BeforeResolve
+  afterResolve?: AfterResolve
   routes: SeRouterRaw[]
-} & Omit<RouterOptions, "beforeEnter" | "afterEnter">
+  scrollBehavior?: RouterScrollBehavior
+}
 
 export function createBrowserRouter(options: SeRouterOptions) {
   const router$ = createObservable()
@@ -121,10 +131,6 @@ export function createBrowserRouter(options: SeRouterOptions) {
     beforeEnter: beforeResolve,
     afterEnter: async (to, from) => {
       try {
-        if (isFunction(afterResolve)) {
-          await Promise.resolve(afterResolve(to, from))
-        }
-
         router$.next({ to, from })
 
         if (isFunction(afterResolve)) {
@@ -135,12 +141,11 @@ export function createBrowserRouter(options: SeRouterOptions) {
       }
     }
   })
-  const { matchs } = appRouter.his.location
 
   return function RouterProvide() {
-    const [_, setViews] = useProvide(INJECT_ROUTE_VIEW, matchs)
+    const [_, setViews] = useProvide(INJECT_ROUTE_VIEW, appRouter.his.location.matchs)
     useProvide(INJECT_ROUTE_ORDER, 0)
-    router$.subscribe(({ to }) => setViews(to.matchs))
+    router$.subscribe(() => setViews(appRouter.his.location.matchs))
 
     useMount(() => {
       return () => {

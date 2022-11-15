@@ -61,6 +61,8 @@ type MatcherOptions = {
   matcher: any
   parent?: MatcherRoute
 }
+
+const emptyReg = /a/
 export function createRouteMatcher({
   route,
   deep,
@@ -74,11 +76,12 @@ export function createRouteMatcher({
   if (!isString(path)) return error("RouterRoute path must be string")
 
   const [_path, paramKeys] = parseRoutePath(path)
-  const _regPath = deep === 0 ? _path : `${parent!.matchPath}${_path}`
+  let _regPath = deep === 0 ? _path : `${parent!.matchPath}${_path}`
+  _regPath = _regPath.startsWith("//") ? _regPath.slice(1) : _regPath
   const _route: MatcherRoute = {
     path,
     matchPath: _regPath,
-    match: /.*/,
+    match: emptyReg,
     loader,
     loaderData: Promise.resolve(),
     paramKeys,

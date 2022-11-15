@@ -33,7 +33,7 @@ export type RouterBeforeEnter = (
   | Promise<NavigateInfo>
   | Promise<boolean>
   | boolean
-  | undefined
+  | void
 export type RouterAfterEnter = (
   to: RouteRecord["state"],
   from: RouteRecord["state"]
