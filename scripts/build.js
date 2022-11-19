@@ -52,7 +52,7 @@ function createConfig({ format, prod }) {
     minify: prod,
     target: "es2018",
     treeShaking: true,
-    external: ["setsuna", "@setsunajs/observable"]
+    external: ["setsunajs", "@setsunajs/observable"]
   }
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "@setsunajs/router",
-  "version": "0.0.2",
+  "version": "0.2.0",
   "description": "Router serving 'setsuna'",
   "keywords": [
     "setsuna",
@@ -40,9 +40,9 @@
     "release": "node ./scripts/release.js"
   },
   "dependencies": {
-    "@setsunajs/observable": "^0.1.5",
-    "@setsunajs/router": "^0.1.2",
-    "setsuna": "^0.1.4"
+    "@setsunajs/observable": "^0.2.2",
+    "@setsunajs/shared": "^0.2.0",
+    "setsunajs": "^0.1.1"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.33.6",

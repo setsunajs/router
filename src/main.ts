@@ -18,7 +18,7 @@ import {
   jsx,
   VNode,
   FC
-} from "setsuna"
+} from "setsunajs"
 import { isFunction } from "@setsunajs/shared"
 import { error } from "./handler"
 

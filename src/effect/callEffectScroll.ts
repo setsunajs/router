@@ -1,5 +1,5 @@
 import { isPlainObject } from "@setsunajs/shared"
-import { nextTick } from "setsuna"
+import { nextTick } from "setsunajs"
 import { error } from "../handler"
 import { RouteRecord } from "../createRouteRecord"
 import { RouterContext } from "../router"
